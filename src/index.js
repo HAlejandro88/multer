@@ -4,11 +4,11 @@ const express =  require('express'),
       morgan = require('morgan'),
       mongoose = require('mongoose'),
       indexroute = require('./routes/index'),
+      imagenRoute = require('./routes/imagen'),
       app = express(),
       cors = require('cors');
 
-const uuid = require('uuid/dist/v4');
-
+const uuid = require('uuid/v4');
 const path = require('path');
 
 
@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
     destination: path.join(__dirname, 'public/img/uploads'),
     filename: (req, file, cb, filename) => {
         console.log(file);
-        cb(null, 'pedro' + path.extname(file.originalname));
+        cb(null, uuid() + path.extname(file.originalname));
     }
 }) 
 app.use(multer({storage}).single('image'));
@@ -34,6 +34,7 @@ app.use(multer({storage}).single('image'));
 
 
 app.use('/inicial', indexroute);
+app.use('/img', imagenRoute);
 
 
 app.listen(3000, 
