@@ -8,11 +8,10 @@ const express =  require('express'),
       app = express(),
       cors = require('cors');
 
-const uuid = require('uuid/v4');
 const path = require('path');
 
 
-mongoose.connect("mongodb://localhost:27017/develop", {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true}).then(() => {
+mongoose.connect("mongodb://localhost:27017/develop").then(() => {
     console.log('base de Datos: \x1b[32m%s\x1b[0m', 'online');
 }).catch((error) => console.log(error));
 
@@ -26,7 +25,7 @@ const storage = multer.diskStorage({
     destination: path.join(__dirname, 'public/img/uploads'),
     filename: (req, file, cb, filename) => {
         console.log(file);
-        cb(null, uuid() + path.extname(file.originalname));
+        cb(null, file.originalname);
     }
 }) 
 app.use(multer({storage}).single('image'));

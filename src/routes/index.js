@@ -24,6 +24,8 @@ app.post('/crear', (req,res) => {
     let body =  req.body;
     let file = req.file;
 
+    console.log(file)
+
     let newImage = {
         title: body.title,
         description: body.description,
